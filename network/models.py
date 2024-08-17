@@ -9,21 +9,21 @@ class NetworkNode(models.Model):
         (2, 'Индивидуальный предприниматель'),
     ]
 
-    name = models.CharField(max_length=255, verbose_name='Название', help_text='Название сетевого узла')
-    email = models.EmailField(verbose_name='Электронная почта', help_text='Электронная почта сетевого узла')
-    country = models.CharField(max_length=100, verbose_name='Страна', help_text='Страна сетевого узла')
-    city = models.CharField(max_length=100, verbose_name='Город', help_text='Город сетевого узла')
-    street = models.CharField(max_length=100, verbose_name='Улица', help_text='Улица сетевого узла')
-    house_number = models.CharField(max_length=10, verbose_name='Номер дома', help_text='Номер дома сетевого узла')
+    name = models.CharField(max_length=255, verbose_name='Название', help_text='Название предприятия')
+    email = models.EmailField(verbose_name='Электронная почта', help_text='Электронная почта предприятия')
+    country = models.CharField(max_length=100, verbose_name='Страна', help_text='Страна предприятия')
+    city = models.CharField(max_length=100, verbose_name='Город', help_text='Город предприятия')
+    street = models.CharField(max_length=100, verbose_name='Улица', help_text='Улица предприятия')
+    house_number = models.CharField(max_length=10, verbose_name='Номер дома', help_text='Номер дома предприятия')
     supplier = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='clients',
-                                 verbose_name='Поставщик', help_text='Поставщик сетевого узла')
+                                 verbose_name='Поставщик', help_text='Поставщик предприятия')
     debt = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name='Задолженность',
-                               help_text='Задолженность сетевого узла')
-    level = models.IntegerField(choices=LEVEL_CHOICES, verbose_name='Уровень', help_text='Уровень сетевого узла')
+                               help_text='Задолженность предприятия')
+    level = models.IntegerField(choices=LEVEL_CHOICES, verbose_name='Уровень', help_text='Уровень предприятия')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания',
-                                      help_text='Дата создания сетевого узла')
-    user = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE, related_name='network_nodes',
-                             verbose_name='Пользователь')
+                                      help_text='Дата создания предприятия')
+    user = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE, related_name='network_nodes', null=True,
+                             blank=True, verbose_name='Пользователь')
 
     def get_admin_url(self):
         return reverse('admin:network_networknode_change', args=[self.pk])
@@ -32,8 +32,8 @@ class NetworkNode(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Сетевой узел'
-        verbose_name_plural = 'Сетевые узлы'
+        verbose_name = 'Предприятие'
+        verbose_name_plural = 'Предприятия'
 
 
 class Product(models.Model):
@@ -41,7 +41,7 @@ class Product(models.Model):
     model = models.CharField(max_length=255, verbose_name='Модель', help_text='Модель продукта')
     release_date = models.DateField(verbose_name='Дата выхода', help_text='Дата выхода продукта')
     network_node = models.ForeignKey(NetworkNode, on_delete=models.CASCADE, related_name='products',
-                                     verbose_name='Сетевой узел', help_text='Сетевой узел для продукта')
+                                     verbose_name='Предприятие', help_text='Предприятие для продукта')
 
     def __str__(self):
         return f"{self.name} ({self.model})"
