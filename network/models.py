@@ -61,7 +61,7 @@ class Product(models.Model):
     model = models.CharField(max_length=255, verbose_name='Модель', help_text='Модель продукта')
     release_date = models.DateField(verbose_name='Дата выпуска', help_text='Дата выпуска продукта')
     network_node = models.ForeignKey(NetworkNode, on_delete=models.CASCADE, related_name='products',
-                                     verbose_name='Предприятие', help_text='Предприятие, производитель продукта')
+                                     verbose_name='Производитель', help_text='Предприятие, производитель продукта')
 
     def get_admin_url(self):
         return reverse('admin:network_product_change', args=[self.pk])
