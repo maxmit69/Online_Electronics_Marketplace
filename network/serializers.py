@@ -9,7 +9,8 @@ class AddressSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    manufacturer = serializers.PrimaryKeyRelatedField(many=True, queryset=NetworkNode.objects.all())
+    manufacturer = serializers.PrimaryKeyRelatedField(many=True, queryset=NetworkNode.objects.all(),
+                                                      label='Производитель')
 
     class Meta:
         model = Product
