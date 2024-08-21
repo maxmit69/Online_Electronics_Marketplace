@@ -6,6 +6,20 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
 
+class Address(models.Model):
+    country = models.CharField(max_length=100, verbose_name='Страна', help_text='Страна предприятия')
+    city = models.CharField(max_length=100, verbose_name='Город', help_text='Город предприятия')
+    street = models.CharField(max_length=100, verbose_name='Улица', help_text='Улица предприятия')
+    house_number = models.CharField(max_length=10, verbose_name='Номер дома', help_text='Номер дома предприятия')
+
+    def __str__(self):
+        return f"{self.country}, {self.city}, {self.street}, {self.house_number}"
+
+    class Meta:
+        verbose_name = 'Адрес'
+        verbose_name_plural = 'Адреса'
+
+
 class NetworkNode(models.Model):
     LEVEL_CHOICES = [
         (0, 'Завод'),
@@ -15,10 +29,12 @@ class NetworkNode(models.Model):
 
     name = models.CharField(max_length=255, verbose_name='Название', help_text='Название предприятия')
     email = models.EmailField(verbose_name='Email', help_text='Email предприятия')
-    country = models.CharField(max_length=100, verbose_name='Страна', help_text='Страна предприятия')
-    city = models.CharField(max_length=100, verbose_name='Город', help_text='Город предприятия')
-    street = models.CharField(max_length=100, verbose_name='Улица', help_text='Улица предприятия')
-    house_number = models.CharField(max_length=10, verbose_name='Номер дома', help_text='Номер дома предприятия')
+    address = models.ForeignKey(Address, on_delete=models.CASCADE, related_name='network_nodes',
+                                verbose_name='Адрес', help_text='Адрес предприятия')
+    # country = models.CharField(max_length=100, verbose_name='Страна', help_text='Страна предприятия')
+    # city = models.CharField(max_length=100, verbose_name='Город', help_text='Город предприятия')
+    # street = models.CharField(max_length=100, verbose_name='Улица', help_text='Улица предприятия')
+    # house_number = models.CharField(max_length=10, verbose_name='Номер дома', help_text='Номер дома предприятия')
     supplier = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='clients',
                                  verbose_name='Поставщик', help_text='Поставщик предприятия')
     debt = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, validators=[MinValueValidator(0)],
@@ -60,8 +76,8 @@ class Product(models.Model):
     name = models.CharField(max_length=255, verbose_name='Название', help_text='Название продукта')
     model = models.CharField(max_length=255, verbose_name='Модель', help_text='Модель продукта')
     release_date = models.DateField(verbose_name='Дата выпуска', help_text='Дата выпуска продукта')
-    network_node = models.ForeignKey(NetworkNode, on_delete=models.CASCADE, related_name='products',
-                                     verbose_name='Производитель', help_text='Предприятие, производитель продукта')
+    manufacturer = models.ManyToManyField(NetworkNode, related_name='products', verbose_name='Производитель',
+                                          help_text='Предприятие, производитель продукта')
 
     def get_admin_url(self):
         return reverse('admin:network_product_change', args=[self.pk])

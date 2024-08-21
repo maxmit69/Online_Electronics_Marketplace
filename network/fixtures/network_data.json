@@ -1,83 +1,110 @@
 [
   {
-    "model": "network.networknode",
-    "pk": 10,
+    "model": "network.address",
+    "pk": 1,
     "fields": {
-      "name": "Электон",
-      "email": "elekton@elekton.ru",
       "country": "Россия",
       "city": "г. Москва",
-      "street": "ул. Авиамоторная",
-      "house_number": "12",
-      "supplier": null,
-      "debt": "0.00",
-      "level": 0,
-      "created_at": "2024-08-21T06:53:46.750Z",
-      "user": null
+      "street": "ул. Куйбышева",
+      "house_number": "65"
     }
   },
   {
-    "model": "network.networknode",
-    "pk": 11,
+    "model": "network.address",
+    "pk": 2,
     "fields": {
-      "name": "Ситилинк",
-      "email": "sitilink@sitilink.com",
       "country": "Россия",
       "city": "г. Челябинск",
       "street": "25-го Октября",
-      "house_number": "115Б",
-      "supplier": 10,
+      "house_number": "115Б"
+    }
+  },
+  {
+    "model": "network.address",
+    "pk": 3,
+    "fields": {
+      "country": "Россия",
+      "city": "г. Пенза",
+      "street": "ул. Авиамоторная",
+      "house_number": "113"
+    }
+  },
+  {
+    "model": "network.networknode",
+    "pk": 1,
+    "fields": {
+      "name": "Электон",
+      "email": "elekton@elekton.ru",
+      "address": 1,
+      "supplier": null,
       "debt": "0.00",
-      "level": 1,
-      "created_at": "2024-08-21T07:01:32.843Z",
+      "level": 0,
+      "created_at": "2024-08-21T18:14:33.940Z",
       "user": null
     }
   },
   {
     "model": "network.networknode",
-    "pk": 12,
+    "pk": 2,
+    "fields": {
+      "name": "Ситилинк",
+      "email": "sitilink@sitilink.com",
+      "address": 2,
+      "supplier": 1,
+      "debt": "0.00",
+      "level": 1,
+      "created_at": "2024-08-21T18:21:56.563Z",
+      "user": null
+    }
+  },
+  {
+    "model": "network.networknode",
+    "pk": 3,
     "fields": {
       "name": "И П Коновалов",
       "email": "vasa@mail.com",
-      "country": "Россия",
-      "city": "г. Пенза",
-      "street": "ул. 25-го Октября",
-      "house_number": "115Б",
-      "supplier": 11,
+      "address": 3,
+      "supplier": 2,
       "debt": "0.00",
       "level": 2,
-      "created_at": "2024-08-21T07:03:22.628Z",
+      "created_at": "2024-08-21T18:24:32.288Z",
       "user": null
     }
   },
   {
     "model": "network.product",
-    "pk": 9,
+    "pk": 1,
     "fields": {
       "name": "Стиральная машина",
       "model": "LG F2J3NS2W",
-      "release_date": "2024-08-21",
-      "network_node": 10
+      "release_date": "2024-08-20",
+      "manufacturer": [
+        1
+      ]
     }
   },
   {
     "model": "network.product",
-    "pk": 10,
+    "pk": 2,
     "fields": {
       "name": "Телевизор",
       "model": "Samsung UE43DU7100UXRU",
-      "release_date": "2024-08-20",
-      "network_node": 11
+      "release_date": "2024-08-14",
+      "manufacturer": [
+        2
+      ]
     }
   },
   {
     "model": "network.product",
-    "pk": 11,
+    "pk": 3,
     "fields": {
       "name": "Чехол (клип-кейс)",
       "model": "PERO CC02-0031-RE",
-      "release_date": "2024-08-19",
-      "network_node": 12
+      "release_date": "2024-08-12",
+      "manufacturer": [
+        3
+      ]
     }
   }
 ]
