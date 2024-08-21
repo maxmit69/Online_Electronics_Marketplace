@@ -36,7 +36,7 @@ class CountryFilter(SimpleListFilter):
 class NetworkNodeAdmin(admin.ModelAdmin):
     list_display = ('name', 'get_country', 'get_city', 'supplier_link', 'debt', 'created_at')
     readonly_fields = ('level',)
-    search_fields = ('name', 'city')
+    search_fields = ('name', 'address__city', 'address__country')
     list_filter = (CityFilter, CountryFilter)
     actions = ['clear_debt']
 
@@ -50,7 +50,7 @@ class NetworkNodeAdmin(admin.ModelAdmin):
 
     get_country.short_description = 'Страна'
 
-    @admin.display(description='Поставщик', ordering='supplier_link')
+    @admin.display(description='Поставщик')
     def supplier_link(self, obj):
         """ Ссылка на поставщика """
         if obj.supplier:
@@ -69,12 +69,10 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'display_manufacturers', 'model', 'release_date')
     search_fields = ('name', 'model')
 
-    @admin.display(description='Предприятие', ordering='display_manufacturers')
+    @admin.display(description='Предприятие')
     def display_manufacturers(self, obj):
         """ Создаем HTML-ссылки для каждого производителя """
         links = []
         for manufacturer in obj.manufacturer.all():
             links.append(format_html('<a href="{}">{}</a>', manufacturer.get_admin_url(), manufacturer.name))
         return format_html(', '.join(links))
-
-    display_manufacturers.short_description = 'Manufacturers'
