@@ -6,6 +6,7 @@ from django.utils.html import format_html
 @admin.register(NetworkNode)
 class NetworkNodeAdmin(admin.ModelAdmin):
     list_display = ('name', 'city', 'supplier_link', 'debt', 'created_at')
+    readonly_fields = ('level',)
     search_fields = ('name', 'city')
     list_filter = ('city', 'country')
     actions = ['clear_debt']
@@ -29,7 +30,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'network_node_link', 'model', 'release_date')
     search_fields = ('name', 'model')
 
-    @admin.display(description='Сетевой узел', ordering='network_node_link')
+    @admin.display(description='Предприятие', ordering='network_node_link')
     def network_node_link(self, obj):
         """ Ссылка на сетевой узел """
         return format_html(
