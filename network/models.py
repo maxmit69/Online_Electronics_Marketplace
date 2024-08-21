@@ -31,10 +31,6 @@ class NetworkNode(models.Model):
     email = models.EmailField(verbose_name='Email', help_text='Email предприятия')
     address = models.ForeignKey(Address, on_delete=models.CASCADE, related_name='network_nodes',
                                 verbose_name='Адрес', help_text='Адрес предприятия')
-    # country = models.CharField(max_length=100, verbose_name='Страна', help_text='Страна предприятия')
-    # city = models.CharField(max_length=100, verbose_name='Город', help_text='Город предприятия')
-    # street = models.CharField(max_length=100, verbose_name='Улица', help_text='Улица предприятия')
-    # house_number = models.CharField(max_length=10, verbose_name='Номер дома', help_text='Номер дома предприятия')
     supplier = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='clients',
                                  verbose_name='Поставщик', help_text='Поставщик предприятия')
     debt = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, validators=[MinValueValidator(0)],
